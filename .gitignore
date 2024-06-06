@@ -1,0 +1,11 @@
+/FrontEnd/node_modules
+/FrontEnd/build
+/FrontEnd/node_modules
+/FrontEnd-lock.json
+/FrontEnd/build
+/FrontEnd.eslintcache
+/idea
+/.idea
+/BackEnd/idea
+/BackEnd/.idea
+/BackEnd/Configurations/.git

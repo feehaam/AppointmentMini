@@ -11,6 +11,7 @@ import com.healthcare.backend.exception.DuplicateEntityException;
 import com.healthcare.backend.exception.PasswordMismatchException;
 import com.healthcare.backend.repository.AccountRepository;
 import com.healthcare.backend.utilities.token.JWTUtils;
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.GrantedAuthority;
