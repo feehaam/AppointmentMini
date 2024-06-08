@@ -33,7 +33,7 @@ const Login = () => {
   const [timer, setTimer] = useState(30);
 
   const handleSendOTP = () => {
-    const url = "http://localhost:5100/access/generate-otp/" + email;
+    const url = "http://localhost:8080/access/generate-otp/" + email;
     AxiosInstance.post(url, "")
       .then((response) => {
         console.log(response);
@@ -53,7 +53,7 @@ const Login = () => {
   };
 
   const handleLogin = () => {
-    const url = "http://localhost:5100/access/login";
+    const url = "http://localhost:8080/access/login";
     // const deviceToken = getDeviceCode();
     if (!email || !password) {
       setWarning("Fill up your email and password correctly.");

@@ -37,6 +37,9 @@ public class Doctor {
     @NotNull(message = "Experience cannot be null")
     private Integer experience;
 
+    @NotNull(message = "Date of birth cannot be null")
+    private String dateOfBirth;
+
     @NotNull(message = "Specializations cannot be null")
     private String specializations;
 
@@ -45,8 +48,6 @@ public class Doctor {
 
     @NotNull(message = "Residence cannot be null")
     private String residence;
-    // Placement
-    private String room;
 
     // Doctor Personal Info
     @OneToMany(cascade = CascadeType.ALL)

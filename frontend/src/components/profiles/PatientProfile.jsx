@@ -55,17 +55,7 @@ const PatientProfile = () => {
       </div>
       <Container className="mt--7" fluid>
         <Row>
-          <Col className="order-xl-2 mb-5 mb-xl-0" xl="4">
-            {patientBio && (
-              <PatientProfilePhoto
-                patientId={patientId}
-                photo={patientBio.photoURL}
-                firstName={patientBio.firstName}
-                lastName={patientBio.lastName}
-              />
-            )}
-          </Col>
-          <Col className="order-xl-1 mb-2" xl="8">
+          <Col className="order-xl-1 center" xl="8">
             <PatientProfileBio patientId={patientId} />
           </Col>
         </Row>

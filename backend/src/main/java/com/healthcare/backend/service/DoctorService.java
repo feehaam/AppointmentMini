@@ -37,6 +37,7 @@ public class DoctorService {
         doctor.setSpecializations(createDoctorAccountDTO.getSpecialization());
         doctor.setPhoneNumber(createDoctorAccountDTO.getPhoneNumber());
         doctor.setResidence(createDoctorAccountDTO.getResidence());
+        doctor.setDateOfBirth(createDoctorAccountDTO.getDateOfBirth());
 
         List<Qualification> qualifications = createDoctorAccountDTO.getQualifications();
         List<Certification> certifications = createDoctorAccountDTO.getCertifications();
@@ -44,14 +45,13 @@ public class DoctorService {
         doctor.setQualifications(qualifications);
         doctor.setCertifications(certifications);
 
-        doctorRepository.save(doctor);
-
         AccountCreateDTO account = new AccountCreateDTO();
         account.setUserId(id);
         account.setEmail(createDoctorAccountDTO.getEmail());
         account.setPassword(createDoctorAccountDTO.getPassword());
-
         accountService.createAccount(account);
+
+        doctorRepository.save(doctor);
     }
 
     private String getId(String firstName, String lastName) {
@@ -61,10 +61,9 @@ public class DoctorService {
         return  idPattern + count;
     }
 
-    public ReadDoctorProfileDTO readDoctorProfileInfo(String userId) throws ItemNotFoundException {
-        Doctor doctor = doctorRepository.findById(userId)
+    public Doctor readDoctorProfileInfo(String userId) throws ItemNotFoundException {
+        return doctorRepository.findById(userId)
                 .orElseThrow(() -> new ItemNotFoundException("Doctor", userId));
-        return doctorToDoctorDTO(doctor);
     }
 
     public void update(String userId, UpdateDoctorProfileDTO updateDoctorProfileDTO) throws AccessMismatchException, ItemNotFoundException {
@@ -89,8 +88,8 @@ public class DoctorService {
         doctorRepository.save(doctor);
     }
 
-    public List<ReadDoctorProfileDTO> readAll() {
-        return doctorRepository.findAll().stream().map(this::doctorToDoctorDTO).toList();
+    public List<Doctor> readAll() {
+        return doctorRepository.findAll();
     }
 
     private ReadDoctorProfileDTO doctorToDoctorDTO(Doctor doctor) {
@@ -104,10 +103,11 @@ public class DoctorService {
         profileDTO.setGender(doctor.getGender());
         profileDTO.setBio(doctor.getBio());
         profileDTO.setExperience(doctor.getExperience());
-        profileDTO.setRoom(doctor.getRoom());
         profileDTO.setSpecializations(doctor.getSpecializations());
         profileDTO.setQualifications(doctor.getQualifications());
         profileDTO.setCertifications(doctor.getCertifications());
+        profileDTO.setDateOfBirth(doctor.getDateOfBirth());
+        profileDTO.setDateOfBirth(doctor.getDateOfBirth());
 
         return profileDTO;
     }

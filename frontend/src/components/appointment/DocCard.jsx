@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Card, CardBody, CardImg, CardTitle, Col } from "reactstrap";
+import { Button, Card, CardBody, CardImg, CardTitle, Col } from "reactstrap";
 import AxiosInstance from "scripts/axioInstance";
 
-const DocCard = ({ doctor, index, setSelectedDoctor }) => {
+const DocCard = ({ doctor, index, setSelectedDoctor, setWarning }) => {
   const [tCount, setTCount] = useState(0);
   const [aCount, setACount] = useState(0);
   useEffect(() => {
@@ -27,17 +27,27 @@ const DocCard = ({ doctor, index, setSelectedDoctor }) => {
       });
   }, []);
 
+  const requestAppointment = (type, docId) => {
+    const url = `http://localhost:8080/appointments/request/${docId}/${type}`
+    console.log(url);
+    AxiosInstance.post(url)
+      .then((response) => {
+        window.location.href = '/health/patient';
+        console.log(requestAppointment);
+      })
+      .catch((error) => {
+        setWarning("Failed to request an appointment! " + error.message)
+        console.log(error);
+      });
+  }
+
   return (
     <>
       <Col key={index} xs={12} sm={6} md={6} lg={3}>
         <Card
-          onClick={() => {
-            setSelectedDoctor(doctor);
-          }}
           className="mt-2"
           style={{
             boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-            cursor: setSelectedDoctor ? "pointer" : "default",
           }}
         >
           {doctor.photoURL ? (
@@ -68,10 +78,8 @@ const DocCard = ({ doctor, index, setSelectedDoctor }) => {
             <div className="m-2">
               <p className="">Specialized at {doctor.specializations}. </p>
               <p className="mb--1">{`Experience: ${doctor.experience} years`}</p>
-              <p className="mb--1">{`Treatments: ${tCount}`}</p>
-              <p className="mb--1">
-                <b>{`Available: next ${aCount} days`}</b>
-              </p>
+              <Button onClick={() => requestAppointment(1, doctor.userId)} className="mt-4 bg-green text-white">Request online appointment</Button>
+              <Button onClick={() => requestAppointment(2, doctor.userId)} className="mt-4 bg-blue text-white">Request in-person appointment</Button>
             </div>
           </CardBody>
         </Card>

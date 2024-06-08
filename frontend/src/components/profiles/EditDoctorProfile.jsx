@@ -17,10 +17,8 @@ import {
   Modal,
 } from "reactstrap";
 import specializationList from "assets/data/enums/specializations";
-import editDoctorProfileData from "assets/data/doctorprofile/editDoctorProfile";
 import { isDoctor } from "scripts/accountInfo";
 import AxiosInstance from "scripts/axioInstance";
-import PhotoUpload from "scripts/PhotoUpload";
 
 const EditDoctorProfile = () => {
   const navigate = useNavigate();
@@ -36,7 +34,6 @@ const EditDoctorProfile = () => {
   const [lastName, setLastName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [specialization, setSpecialization] = useState("");
-  const [photo, setPhoto] = useState("");
   const [residence, setResidence] = useState("");
   const [bio, setBio] = useState("");
   const [experience, setExperience] = useState(null);
@@ -60,7 +57,7 @@ const EditDoctorProfile = () => {
     if (doctorId === null) {
       return navigate("/");
     }
-    AxiosInstance.get(`http://localhost:7200/doctors/existing-edit-data`)
+    AxiosInstance.get(`http://localhost:8080/doctors/${doctorId}/profile-info`)
       .then((response) => {
         console.log(response);
         setExisting(response.data);
@@ -87,9 +84,6 @@ const EditDoctorProfile = () => {
       }
       if (existing.specialization !== null) {
         setSpecialization(existing.specialization);
-      }
-      if (existing.photo !== null) {
-        setPhoto(existing.photo);
       }
       if (existing.residence !== null) {
         setResidence(existing.residence);
@@ -208,13 +202,6 @@ const EditDoctorProfile = () => {
       return false;
     }
 
-    if (!photo) {
-      setAlertMessage(
-        "Select one profile photo of yours, it must contain clear face."
-      );
-      return false;
-    }
-
     if (!bio || bio.length < 10) {
       setAlertMessage("Please write a bio describing yourself.");
       return false;
@@ -291,7 +278,6 @@ const EditDoctorProfile = () => {
       specialization: specialistList,
       residence,
       experience,
-      photo: photo ? photo : null,
       bio,
       qualifications: qualifications.filter((qualification) => {
         return (
@@ -310,7 +296,7 @@ const EditDoctorProfile = () => {
     };
     console.log(updatedProfileData);
     AxiosInstance.put(
-      `http://localhost:7200/doctors/edit-profile`,
+      `http://localhost:8080/doctors/edit-profile`,
       updatedProfileData
     )
       .then((response) => {
@@ -375,14 +361,7 @@ const EditDoctorProfile = () => {
                           {alertMessage}
                         </div>
                       )}
-                      <h6 className="heading-small text-muted mb-4">
-                        Profile photo
-                      </h6>
-                      <Row className="justify-content-center">
-                        <FormGroup>
-                          <PhotoUpload url={photo} setUrl={setPhoto} />
-                        </FormGroup>
-                      </Row>
+                      
                       <h6 className="heading-small text-muted mb-4">
                         Personal info
                       </h6>

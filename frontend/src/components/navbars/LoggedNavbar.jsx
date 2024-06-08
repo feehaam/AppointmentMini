@@ -60,13 +60,7 @@ const LoggedNavbar = (props) => {
 
     // Set up interval to fetch notifications every 3 seconds
     const intervalId = setInterval(() => {
-      AxiosInstance.get("http://localhost:7600/notifications/unseen-count")
-        .then((response) => {
-          setNotification(response.data);
-        })
-        .catch((error) => {
-          console.error("Error fetching notifications:", error);
-        });
+      
     }, 3000);
 
     // Clear interval on component unmount
@@ -104,85 +98,11 @@ const LoggedNavbar = (props) => {
       <Navbar className="navbar-top navbar-dark" expand="md" id="navbar-main">
         <Container fluid>
           <Link
-            className="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block"
+            className="h1 mb-0 text-white text-uppercase d-none d-lg-inline-block"
             to="/"
           >
             EA Healthcare - your health, our concern
           </Link>
-          <Form className="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
-            <FormGroup className="mb-0">
-              <InputGroup className="input-group-alternative">
-                <InputGroupAddon addonType="prepend">
-                  <InputGroupText>
-                    <i className="fas fa-search" />
-                  </InputGroupText>
-                </InputGroupAddon>
-                <Input
-                  placeholder="Search"
-                  type="text"
-                  value={searchQuery}
-                  onChange={handleSearchInputChange}
-                  onKeyPress={handleSearchKeyPress}
-                />
-              </InputGroup>
-            </FormGroup>
-          </Form>
-          <div
-            style={{ position: "relative", display: "inline-block" }}
-            onClick={() => {
-              navigate("/health/notifications");
-            }}
-          >
-            <i
-              className="fa-solid fa-bell text-xl"
-              style={{ color: "#ffbe4d", cursor: "pointer" }}
-            ></i>
-            {notification > 0 && (
-              <div
-                style={{
-                  position: "absolute",
-                  bottom: "0.5rem",
-                  right: "0.5rem",
-                  backgroundColor: "red",
-                  color: "white",
-                  borderRadius: "50%",
-                  padding: "0.1rem 0.3rem",
-                  fontSize: "0.7rem",
-                  cursor: "pointer",
-                }}
-              >
-                {notification}
-              </div>
-            )}
-          </div>
-          <Nav className="align-items-center d-none d-md-flex" navbar>
-            <UncontrolledDropdown nav>
-              <DropdownToggle className="pr-0" nav>
-                <Media className="align-items-center">
-                  {renderUserPhoto()}
-                  <Media className="ml-2 d-none d-lg-block">
-                    <span className="mb-0 text-sm font-weight-bold">
-                      {userData.firstName} {userData.lastName}
-                    </span>
-                  </Media>
-                </Media>
-              </DropdownToggle>
-              <DropdownMenu className="dropdown-menu-arrow" right>
-                <DropdownItem to="/health/settings" tag={Link}>
-                  <i class="fa fa-cog" aria-hidden="true"></i>
-                  <Link to={"/health/settings"}>
-                    <span>Settings</span>
-                  </Link>
-                </DropdownItem>
-                <DropdownItem to="/health/logout" tag={Link}>
-                  <i class="fa fa-sign-out" aria-hidden="true"></i>
-                  <Link to={"/health/logout"}>
-                    <span>Lougout</span>
-                  </Link>
-                </DropdownItem>
-              </DropdownMenu>
-            </UncontrolledDropdown>
-          </Nav>
         </Container>
       </Navbar>
     </>

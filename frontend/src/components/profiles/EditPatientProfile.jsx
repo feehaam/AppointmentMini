@@ -19,7 +19,6 @@ import {
 import allergiesList from "assets/data/enums/allergies";
 import { Link } from "react-router-dom";
 import AxiosInstance from "scripts/axioInstance";
-import PhotoUpload from "scripts/PhotoUpload";
 
 const EditPatientProfile = () => {
   const patientId = localStorage.getItem("userId");
@@ -33,7 +32,6 @@ const EditPatientProfile = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [allergies, setAllergies] = useState("");
   const [allergiesEnum, setAllergiesEnum] = useState([]);
-  const [photo, setPhoto] = useState(null);
   const [residence, setResidence] = useState("");
   const [alertMessage, setAlertMessage] = useState("");
   const [success, setSuccess] = useState("");
@@ -52,7 +50,7 @@ const EditPatientProfile = () => {
   const [occupation, setOccupation] = useState();
 
   useEffect(() => {
-    AxiosInstance.get(`http://localhost:7100/patients/${patientId}/bio`)
+    AxiosInstance.get(`http://localhost:8080/patients/${patientId}/patient`)
       .then((response) => {
         const data = response.data;
         setFirstName(data.firstName);
@@ -61,44 +59,16 @@ const EditPatientProfile = () => {
         setPhoneNumber(data.phone);
         setResidence(data.address);
         setBloodGroup(data.bloodGroup);
-        setPhoto(data.profilePhoto);
+        setWeight(data.weight);
+        setAge(data.age);
+        setHeight(data.height);
+        setOccupation(data.occupation);
 
         console.log(data);
       })
       .catch((error) => {
         console.error("Error fetching doctors:", error);
         setAlertMessage("Failed to parse existing profile bio. ");
-      });
-    setAllergiesEnum(allergiesList);
-  }, []);
-
-  useEffect(() => {
-    AxiosInstance.get(`http://localhost:7100/patients/${patientId}/health`)
-      .then((response) => {
-        const data = response.data;
-        setWeight(data.weight);
-        setAge(data.age);
-        setBloodPressure(data.bloodPressure);
-        setHeight(data.height);
-        setOccupation(data.occupation);
-        setSmoking(data.smoking === "Yes");
-        setDringking(data.drinking === "Yes");
-        setAsthma(data.asthma === "Yes");
-
-        let aler = "";
-        for (let i = 0; i < data.allergies.length; i++) {
-          aler = aler + data.allergies[i];
-          if (i < data.allergies.length - 1) {
-            aler = aler + ", ";
-          }
-        }
-        setAllergies(aler);
-
-        console.log(data);
-      })
-      .catch((error) => {
-        console.error("Error fetching doctors:", error);
-        setAlertMessage("Failed to parse existing profile health data. ");
       });
     setAllergiesEnum(allergiesList);
   }, []);
@@ -136,13 +106,11 @@ const EditPatientProfile = () => {
       firstName,
       lastName,
       gender,
-      profilePhoto: photo,
       allergies: allergies,
       age,
       height,
       weight,
       bloodGroup,
-      bloodSugar,
       bloodPressure,
       occupation,
       phoneNo: phoneNumber,
@@ -152,7 +120,7 @@ const EditPatientProfile = () => {
       asthma,
     };
     AxiosInstance.put(
-      `http://localhost:7100/patients/update-profile`,
+      `http://localhost:8080/patients/update-profile`,
       updatedProfile
     )
       .then((response) => {
@@ -216,9 +184,6 @@ const EditPatientProfile = () => {
                       {success}
                     </div>
                   )}
-                  <FormGroup>
-                    <PhotoUpload url={photo} setUrl={setPhoto} />
-                  </FormGroup>
                   <Row>
                     <Col md="6">
                       <FormGroup>
@@ -389,66 +354,7 @@ const EditPatientProfile = () => {
                         </InputGroup>
                       </FormGroup>
                     </Col>
-                    <Col md="6">
-                      <FormGroup>
-                        <InputGroup className="input-group-alternative">
-                          <InputGroupAddon addonType="prepend">
-                            <InputGroupText>
-                              <i
-                                className="ni ni-chart-bar-32"
-                                style={textColor}
-                              />
-                            </InputGroupText>
-                          </InputGroupAddon>
-                          <CustomInput
-                            type="select"
-                            id="bloodSugar"
-                            value={bloodSugar}
-                            onChange={(e) => setBloodSugar(e.target.value)}
-                            style={textColor}
-                          >
-                            <option value="">Select Blood Sugar Level</option>
-                            <option value="Very Low">Very Low</option>
-                            <option value="Low">Low</option>
-                            <option value="Moderate">Moderate</option>
-                            <option value="High">High</option>
-                            <option value="Very High">Very High</option>
-                          </CustomInput>
-                        </InputGroup>
-                      </FormGroup>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col md="6">
-                      <FormGroup>
-                        <InputGroup className="input-group-alternative">
-                          <InputGroupAddon addonType="prepend">
-                            <InputGroupText>
-                              <i
-                                className="ni ni-chart-bar-32"
-                                style={textColor}
-                              />
-                            </InputGroupText>
-                          </InputGroupAddon>
-                          <CustomInput
-                            type="select"
-                            id="bloodPressure"
-                            value={bloodPressure}
-                            onChange={(e) => setBloodPressure(e.target.value)}
-                            style={textColor}
-                          >
-                            <option value="">
-                              Select Blood Pressure Level
-                            </option>
-                            <option value="Very Low">Very Low</option>
-                            <option value="Low">Low</option>
-                            <option value="Moderate">Moderate</option>
-                            <option value="High">High</option>
-                            <option value="Very High">Very High</option>
-                          </CustomInput>
-                        </InputGroup>
-                      </FormGroup>
-                    </Col>
+                    
                     <Col md="6">
                       <FormGroup>
                         <InputGroup className="input-group-alternative">
@@ -467,85 +373,6 @@ const EditPatientProfile = () => {
                             value={occupation}
                             onChange={(e) => setOccupation(e.target.value)}
                             style={textColor}
-                          />
-                        </InputGroup>
-                      </FormGroup>
-                    </Col>
-                  </Row>
-
-                  <FormGroup>
-                    <InputGroup className="input-group-alternative">
-                      <InputGroupAddon addonType="prepend">
-                        <InputGroupText>
-                          <i className="ni ni-badge" style={textColor} />
-                        </InputGroupText>
-                      </InputGroupAddon>
-                      <Input
-                        placeholder="allergies"
-                        type="text"
-                        value={allergies}
-                        onClick={() => setIsallergiesModalOpen(true)}
-                        style={{
-                          ...textColor,
-                          margin: "5px",
-                          padding: "5px 10px",
-                          border: "none",
-                          cursor: "pointer",
-                        }}
-                      />
-                    </InputGroup>
-                  </FormGroup>
-                  <Row>
-                    <Col md="4">
-                      <FormGroup>
-                        <InputGroup className="input-group-alternative">
-                          <InputGroupAddon addonType="prepend">
-                            <InputGroupText>
-                              <i className="fa fa-smoking" style={textColor} />
-                            </InputGroupText>
-                          </InputGroupAddon>
-                          <CustomInput
-                            type="checkbox"
-                            id="smoking"
-                            label="Smoking"
-                            checked={smoking}
-                            onChange={() => setSmoking(!smoking)}
-                          />
-                        </InputGroup>
-                      </FormGroup>
-                    </Col>
-                    <Col md="4">
-                      <FormGroup>
-                        <InputGroup className="input-group-alternative">
-                          <InputGroupAddon addonType="prepend">
-                            <InputGroupText>
-                              <i className="fa fa-beer" style={textColor} />
-                            </InputGroupText>
-                          </InputGroupAddon>
-                          <CustomInput
-                            type="checkbox"
-                            id="drinking"
-                            label="Drinking"
-                            checked={drinking}
-                            onChange={() => setDringking(!drinking)}
-                          />
-                        </InputGroup>
-                      </FormGroup>
-                    </Col>
-                    <Col md="4">
-                      <FormGroup>
-                        <InputGroup className="input-group-alternative">
-                          <InputGroupAddon addonType="prepend">
-                            <InputGroupText>
-                              <i className="fa fa-lungs" style={textColor} />
-                            </InputGroupText>
-                          </InputGroupAddon>
-                          <CustomInput
-                            type="checkbox"
-                            id="asthma"
-                            label="Asthma"
-                            checked={asthma}
-                            onChange={() => setAsthma(!asthma)}
                           />
                         </InputGroup>
                       </FormGroup>

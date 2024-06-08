@@ -21,7 +21,7 @@ export const DoctorProfileDetails = ({ doctorData }) => {
             </Col>
             {doctorData &&
             localStorage.getItem("userId") &&
-            doctorData.doctorId === localStorage.getItem("userId") ? (
+            doctorData.userId === localStorage.getItem("userId") ? (
               <Col className="text-right" xs="4">
                 <Link
                   to={"/health/doctors/edit-profile"}
@@ -42,9 +42,6 @@ export const DoctorProfileDetails = ({ doctorData }) => {
               <Col lg="6">
                 <b>Doctor ID: {doctorData.doctorId}</b>
               </Col>
-              <Col lg="6">
-                Email: <b>{doctorData.email}</b>
-              </Col>
             </Row>
             <Row>
               <Col lg="6">
@@ -58,12 +55,7 @@ export const DoctorProfileDetails = ({ doctorData }) => {
               <Col lg="6">
                 Gender: <b>{doctorData.gender}</b>
               </Col>
-              <Col lg="6">
-                <span style={{ color: "green" }}>
-                  <i className="ni ni-check-bold" />
-                </span>{" "}
-                Medical License Number: {doctorData.license}
-              </Col>
+              
             </Row>
           </div>
           <hr className="my-4" />
@@ -115,12 +107,11 @@ export const DoctorProfileDetails = ({ doctorData }) => {
               <h6 className="heading-small text-muted mb-4">Personal Info</h6>
               <div className="pl-lg-4">
                 <Row>
-                  <Col md="6">Date of Birth: {personal.dateOfBirth}</Col>
-                  <Col md="6">Phone no: {personal.phone}</Col>
+                  <Col md="6">Date of Birth: {doctorData.dateOfBirth}</Col>
+                  <Col md="6">Phone no: {doctorData.phoneNumber}</Col>
                 </Row>
                 <Row>
-                  <Col md="6">NID No: {personal.nidNo}</Col>
-                  <Col md="6">Residence: {personal.residence}</Col>
+                  <Col md="6">Residence: {doctorData.residence}</Col>
                 </Row>
               </div>
             </>

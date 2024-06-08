@@ -26,7 +26,7 @@ const DoctorProfile = () => {
     if (doctorId === null) {
       return navigate("/");
     }
-    AxiosInstance.get(`http://localhost:7200/doctors/${doctorId}/profile-info`)
+    AxiosInstance.get(`http://localhost:8080/doctors/${doctorId}/profile-info`)
       .then((response) => {
         console.log(response);
         setDoctorData(response.data);
@@ -59,7 +59,6 @@ const DoctorProfile = () => {
           </Col>
           <Col className="order-xl-1" xl="8">
             <DoctorProfileDetails doctorData={doctorData} />
-            <DoctorProfileReviews doctorId={doctorData.doctorId} />
           </Col>
         </Row>
       </Container>

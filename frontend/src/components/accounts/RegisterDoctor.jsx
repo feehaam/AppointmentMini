@@ -18,7 +18,6 @@ import {
 } from "reactstrap";
 import specializationList from "assets/data/enums/specializations";
 import AxiosInstance from "scripts/axioInstance";
-import PhotoUpload from "scripts/PhotoUpload";
 
 const textColor = {
   color: "#555",
@@ -35,7 +34,6 @@ const RegisterDoctor = () => {
   const [gender, setGender] = useState("");
   const [specialization, setSpecialization] = useState("");
   const [dateOfBirth, setDateOfBirth] = useState(new Date()); // Initialize with a default date
-  const [photo, setPhoto] = useState("");
   const [nid, setNid] = useState("");
   const [residence, setResidence] = useState("");
   const [bio, setBio] = useState("");
@@ -46,7 +44,6 @@ const RegisterDoctor = () => {
   const [agreeTerms, setAgreeTerms] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
   const [experience, setExperience] = useState(null);
-  const [license, setLicense] = useState(null);
   const [isSpecializationModalOpen, setIsSpecializationModalOpen] =
     useState(false);
 
@@ -164,7 +161,7 @@ const RegisterDoctor = () => {
     // Check if the date of birth is at least 18 years ago
     const birthDate = new Date(dateOfBirth);
     const currentDate = new Date();
-    const age = currentDate.getFullYear() - birthDate.getFullYear();
+    var age = currentDate.getFullYear() - birthDate.getFullYear();
     if (
       currentDate.getMonth() < birthDate.getMonth() ||
       (currentDate.getMonth() === birthDate.getMonth() &&
@@ -203,13 +200,6 @@ const RegisterDoctor = () => {
 
     if (!residence || residence.length < 10) {
       setAlertMessage("Please provide your detailed residence information.");
-      return false;
-    }
-
-    if (!photo) {
-      setAlertMessage(
-        "Select one profile photo of yours, it must contain clear face."
-      );
       return false;
     }
 
@@ -282,10 +272,6 @@ const RegisterDoctor = () => {
       return false;
     }
 
-    if (!license || license.length < 4) {
-      setAlertMessage(`Please provide valid license.`);
-      return false;
-    }
 
     setAlertMessage("");
     return true;
@@ -309,25 +295,23 @@ const RegisterDoctor = () => {
       bio,
       qualifications,
       certifications,
-      photo,
       experience,
-      license,
     };
     if (!validate()) {
       return;
     }
-    const url = "http://localhost:7200/doctors/register";
+    const url = "http://localhost:8080/doctors/register";
     AxiosInstance.post(url, doctorData)
       .then((response) => {
         console.log(response);
         setSuccess(
           response.data +
-            ". Go to login page to verify and sign into your account."
+            ". Go to login page to sign into your account."
         );
       })
       .catch((error) => {
         console.log(error);
-        // setWarning(error.response.data.message);
+         setWarning(error.response.data.message);
       });
   };
 
@@ -509,9 +493,6 @@ const RegisterDoctor = () => {
                 </InputGroup>
               </FormGroup>
               <FormGroup>
-                <PhotoUpload url={photo} setUrl={setPhoto} />
-              </FormGroup>
-              <FormGroup>
                 <InputGroup className="input-group-alternative">
                   <InputGroupAddon addonType="prepend">
                     <InputGroupText>
@@ -581,22 +562,7 @@ const RegisterDoctor = () => {
                   />
                 </InputGroup>
               </FormGroup>
-              <FormGroup>
-                <InputGroup className="input-group-alternative">
-                  <InputGroupAddon addonType="prepend">
-                    <InputGroupText>
-                      <i className="ni ni-check-bold" style={textColor} />
-                    </InputGroupText>
-                  </InputGroupAddon>
-                  <Input
-                    placeholder="Medical License Number"
-                    type="text"
-                    value={license}
-                    onChange={(e) => setLicense(e.target.value)}
-                    style={textColor}
-                  />
-                </InputGroup>
-              </FormGroup>
+              
               <FormGroup>
                 <InputGroup className="input-group-alternative">
                   <InputGroupAddon addonType="prepend">

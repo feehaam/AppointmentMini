@@ -3,6 +3,7 @@ package com.healthcare.backend.controller;
 import com.healthcare.backend.dto.CreateDoctorAccountDTO;
 import com.healthcare.backend.dto.ReadDoctorProfileDTO;
 import com.healthcare.backend.dto.UpdateDoctorProfileDTO;
+import com.healthcare.backend.entity.Doctor;
 import com.healthcare.backend.exception.AccessMismatchException;
 import com.healthcare.backend.exception.ItemNotFoundException;
 import com.healthcare.backend.service.DoctorService;
@@ -34,13 +35,13 @@ public class DoctorController {
     }
 
     @GetMapping("/{userId}/profile-info")
-    public ResponseEntity<ReadDoctorProfileDTO> getProfileInfo(@PathVariable String userId) throws ItemNotFoundException {
-        ReadDoctorProfileDTO profileInfo = doctorService.readDoctorProfileInfo(userId);
+    public ResponseEntity<Doctor> getProfileInfo(@PathVariable String userId) throws ItemNotFoundException {
+        Doctor profileInfo = doctorService.readDoctorProfileInfo(userId);
         return ResponseEntity.ok(profileInfo);
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<ReadDoctorProfileDTO>> getAllDoctors() {
+    public ResponseEntity<List<Doctor>> getAllDoctors() {
         return ResponseEntity.ok(doctorService.readAll());
     }
 }

@@ -1,11 +1,6 @@
 import {
   Button,
   Col,
-  FormGroup,
-  Input,
-  InputGroup,
-  InputGroupAddon,
-  InputGroupText,
   Row,
 } from "reactstrap";
 import Purpose from "./Purpose";
@@ -28,72 +23,8 @@ const Index = (props) => {
 
   return (
     <>
-      <Purpose />
-      <div
-        style={{
-          width: "100%",
-          textAlign: "center",
-          padding: "20px 0",
-        }}
-      >
-        <div style={{ backgroundColor: "green", display: "inline-block" }}>
-          <InputGroup className="input-group-alternative">
-            <InputGroupAddon addonType="prepend">
-              <InputGroupText>
-                <i style={{ color: "#777" }} className="fas fa-search" />
-              </InputGroupText>
-            </InputGroupAddon>
-            <Input
-              style={{ backgroundClip: "gray", width: "700px" }}
-              placeholder="Need help? Search anything here!"
-              type="text"
-              value={searchQuery}
-              onChange={handleSearchInputChange}
-              onKeyPress={handleSearchKeyPress}
-            />
-          </InputGroup>
-        </div>
-      </div>
 
-      <Row className="align-items-center">
-        <Col>
-          <Row>
-            <Col>
-              <div>
-                <h1
-                  style={{
-                    color: "white",
-                    textShadow: "2px 2px 4px #888888",
-                    borderBottom: "1px solid gray",
-                  }}
-                >
-                  Get treatment from our highly skilled doctors
-                </h1>
-                <p
-                  style={{ color: "white", textShadow: "2px 2px 4px #888888" }}
-                >
-                  Our team of highly skilled doctors, specializing in various
-                  fields, is dedicated to providing exceptional care. With
-                  expertise in specific medical domains, we ensure personalized
-                  and effective treatments for our patients.
-                </p>
-              </div>
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              <Col>
-                <Link to={"/health/appointment"}>
-                  <Button className="m-2">See all doctors</Button>
-                </Link>
-              </Col>
-            </Col>
-          </Row>
-        </Col>
-        <Col>
-          <img src={require("../../assets/img/home/docs1.png")} alt="Doctors" />
-        </Col>
-      </Row>
+      
 
       <Patients />
 
@@ -114,7 +45,7 @@ const Index = (props) => {
                 <p
                   style={{ color: "white", textShadow: "2px 2px 4px #888888" }}
                 >
-                  Explore our advanced telemedicine services that bring
+                  Explore our advanced in-person and telemedicine services that bring
                   healthcare to your fingertips. Connect with our skilled
                   medical professionals from the comfort of your home, ensuring
                   timely and accessible medical consultations. Embrace the
@@ -129,7 +60,7 @@ const Index = (props) => {
               <Col>
                 <Link to={"/health/appointment"}>
                   <Button className="m-2">
-                    See all telemedicine schedules
+                    Book an appointment
                   </Button>
                 </Link>
               </Col>
@@ -163,10 +94,9 @@ const Index = (props) => {
                 <p
                   style={{ color: "white", textShadow: "2px 2px 4px #888888" }}
                 >
-                  Discover a community-driven approach to health and well-being.
-                  Engage with fellow members, share experiences, and access
-                  valuable resources. Our healthcare community is a space where
-                  individuals come together to support one another, fostering a
+                  Our healthcare community is a space where people from all over 
+                  the places takes benefits from smart treatment and health 
+                  advising, fostering a
                   sense of connection and empowerment on the journey to optimal
                   health.
                 </p>
@@ -176,15 +106,14 @@ const Index = (props) => {
           <Row>
             <Col>
               <Col>
-                <Link to={"/health/community"}>
-                  <Button className="m-2">Explore the community!</Button>
+                <Link to={"/public/register-patient"}>
+                  <Button className="m-2">Create an account</Button>
                 </Link>
               </Col>
             </Col>
           </Row>
         </Col>
       </Row>
-
       <Row className="align-items-center">
         <Col>
           <Row>
@@ -197,16 +126,12 @@ const Index = (props) => {
                     borderBottom: "1px solid gray",
                   }}
                 >
-                  Unlock Your Understanding On Medicines: Medicine Encyclopedia
+                  Get treatment from our highly skilled doctors
                 </h1>
                 <p
                   style={{ color: "white", textShadow: "2px 2px 4px #888888" }}
                 >
-                  Dive into a comprehensive Medicine Encyclopedia offering
-                  in-depth information on various medical topics. Stay informed
-                  about conditions, treatments, and healthcare advancements.
-                  Empower yourself with knowledge to make informed decisions
-                  about your health. Your go-to resource for medical insights.
+                  Are you a doctor? Willing to join our skilled community of the physicians? Join and start treating people in person and through telemedicine media!
                 </p>
               </div>
             </Col>
@@ -214,58 +139,15 @@ const Index = (props) => {
           <Row>
             <Col>
               <Col>
-                <Link to={"/common/medicines"}>
-                  <Button className="m-2">Brose medicines index</Button>
+                <Link to={"/public/register-doctor"}>
+                  <Button className="m-2">Join as a doctor</Button>
                 </Link>
               </Col>
             </Col>
           </Row>
         </Col>
         <Col>
-          <img src={require("../../assets/img/home/med1.png")} alt="Doctors" />
-        </Col>
-      </Row>
-
-      <Row className="align-items-center">
-        <Col>
-          <Row>
-            <Col>
-              <div>
-                <h1
-                  style={{
-                    color: "white",
-                    textShadow: "2px 2px 4px #888888",
-                    borderBottom: "1px solid gray",
-                  }}
-                >
-                  Transparent Healthcare: Diagnoses Details and Costing
-                </h1>
-                <p
-                  style={{ color: "white", textShadow: "2px 2px 4px #888888" }}
-                >
-                  Gain transparency into your healthcare journey. Understand the
-                  details of diagnoses, treatment plans, and associated costs.
-                  Our commitment to openness ensures that you are well-informed
-                  every step of the way. Discover clarity and confidence in your
-                  healthcare decisions.
-                </p>
-              </div>
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              <Col>
-                <Link to={"/common/equipments"}>
-                  <Button className="m-2">
-                    See equipments and cost details
-                  </Button>
-                </Link>
-              </Col>
-            </Col>
-          </Row>
-        </Col>
-        <Col>
-          <img src={require("../../assets/img/home/equ1.png")} alt="Doctors" />
+          <img src={require("../../assets/img/home/docs1.png")} alt="Doctors" />
         </Col>
       </Row>
     </>

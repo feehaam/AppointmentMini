@@ -7,7 +7,7 @@ export const PatientProfileBio = ({ patientId }) => {
   const [patientData, setPatientData] = useState(null);
 
   useEffect(() => {
-    AxiosInstance.get(`http://localhost:7100/patients/${patientId}/bio`)
+    AxiosInstance.get(`http://localhost:8080/patients/${patientId}/patient`)
       .then((response) => {
         console.log(response);
         setPatientData(response.data);
@@ -29,7 +29,7 @@ export const PatientProfileBio = ({ patientId }) => {
             </Col>
             {patientData &&
             localStorage.getItem("userId") &&
-            patientData.patientId === localStorage.getItem("userId") ? (
+            patientData.userId === localStorage.getItem("userId") ? (
               <Col className="text-right" xs="4">
                 <Link
                   to={"/health/patients/edit-profile"}
@@ -44,15 +44,12 @@ export const PatientProfileBio = ({ patientId }) => {
           </Row>
         </CardHeader>
         <CardBody>
-          <h6 className="heading-small text-muted mb-4">Primary Info</h6>
+          <h6 className="heading-small text-muted mb-4">Patient Info</h6>
           {patientData && (
             <div className="pl-lg-4">
               <Row>
                 <Col lg="6">
                   <b>Patient ID: {patientId}</b>
-                </Col>
-                <Col lg="6">
-                  Email: <b>{patientData.email}</b>
                 </Col>
               </Row>
               <Row>
@@ -73,7 +70,24 @@ export const PatientProfileBio = ({ patientId }) => {
               </Row>
               <Row>
                 <Col lg="6">
+                  Height: <b>{patientData.height}</b>
+                </Col>
+                <Col lg="6">
+                  Weight: <b>{patientData.weight}</b>
+                </Col>
+              </Row>
+              <Row>
+              
+              <Col lg="6">
+                  Age: <b>{patientData.age}</b>
+                </Col>
+                <Col lg="6">
                   Phone: <b>{patientData.phone}</b>
+                </Col>
+              </Row>
+              <Row>
+                <Col lg="6">
+                  Occupation: <b>{patientData.occupation}</b>
                 </Col>
                 <Col lg="6">
                   Address: <b>{patientData.address}</b>

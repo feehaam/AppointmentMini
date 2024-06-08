@@ -17,12 +17,12 @@ const CreateAppointment = () => {
   const [specList, setSpecList] = useState([]);
   const [selectedDoctor, setSelectedDoctor] = useState();
   const [spec, setSpec] = useState("");
+  const [warning, setWarning] = useState("");
 
   useEffect(() => {
-    AxiosInstance.get(`http://localhost:7200/specializations`)
+    AxiosInstance.get(`http://localhost:8080/doctors/all`)
       .then((response) => {
         console.log(response.data);
-        setSpecList(response.data);
       })
       .catch((error) => {
         console.log("Parsing spec error", error);
@@ -31,7 +31,7 @@ const CreateAppointment = () => {
   }, []);
 
   useEffect(() => {
-    AxiosInstance.get(`http://localhost:7200/specializations/${spec}`)
+    AxiosInstance.get(`http://localhost:8080/doctors/all`)
       .then((response) => {
         setDoctors(response.data);
       })
@@ -43,6 +43,7 @@ const CreateAppointment = () => {
 
   return (
     <>
+
       <div
         className="header pb-5 pt-5 pt-lg-8 d-flex align-items-center"
         style={{
@@ -66,32 +67,7 @@ const CreateAppointment = () => {
         <Container className="m-3">
           {!selectedDoctor ? (
             <>
-              <div style={{ fontWeight: "bold" }}>Select a specialization</div>
-              <FormGroup>
-                <InputGroup className="input-group-alternative">
-                  <InputGroupAddon addonType="prepend">
-                    <InputGroupText>
-                      <i className="ni ni-badge" style={{ color: "#555" }} />
-                    </InputGroupText>
-                  </InputGroupAddon>
-                  <CustomInput
-                    type="select"
-                    id="existingItems"
-                    value={spec}
-                    onChange={(e) => setSpec(e.target.value)}
-                    style={{ color: "#555" }}
-                  >
-                    <option value="All">All</option>
-                    {specList.map((sp, index) => (
-                      <>
-                        <option id={index} value={sp}>
-                          {sp}
-                        </option>
-                      </>
-                    ))}
-                  </CustomInput>
-                </InputGroup>
-              </FormGroup>
+              
             </>
           ) : (
             <div
@@ -107,6 +83,7 @@ const CreateAppointment = () => {
             </div>
           )}
         </Container>
+        {warning && <div className="alert alert-danger">{warning}</div>}
         {selectedDoctor ? (
           <Schedules
             selectedDoctor={selectedDoctor}
@@ -115,7 +92,8 @@ const CreateAppointment = () => {
         ) : (
           <Row>
             {doctors.map((doctor, index) => (
-              <DocCard
+              <DocCard 
+              setWarning={setWarning}
                 doctor={doctor}
                 index={index}
                 setSelectedDoctor={setSelectedDoctor}

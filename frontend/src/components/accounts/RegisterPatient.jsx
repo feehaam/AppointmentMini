@@ -41,7 +41,7 @@ const RegisterPatient = () => {
       setWarning(validationResult.error);
       return;
     }
-    const url = "http://localhost:7100/patients/register";
+    const url = "http://localhost:8080/patients/register";
 
     const requestBody = {
       firstName,
@@ -56,7 +56,7 @@ const RegisterPatient = () => {
       .then((response) => {
         setSuccess(
           response.data +
-            ". Go to login page to verify and sign into your account."
+            ". Go to login to sign into your account."
         );
         setFirstName("");
         setLastName("");

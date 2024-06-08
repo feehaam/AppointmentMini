@@ -19,6 +19,7 @@ public class ReadDoctorProfileDTO {
     private String bio;
     private Integer experience;
     private String license;
+    private String dateOfBirth;
     private String specializations;
     private List<Qualification> qualifications;
     private List<Certification> certifications;
