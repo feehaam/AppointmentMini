@@ -43,7 +43,6 @@ const CreateAppointment = () => {
 
   return (
     <>
-
       <div
         className="header pb-5 pt-5 pt-lg-8 d-flex align-items-center"
         style={{
@@ -58,7 +57,7 @@ const CreateAppointment = () => {
         <Container className="d-flex align-items-center" fluid>
           <Row>
             <h1 className="display-2 opacity-7" style={{ color: "white" }}>
-              Take Appointment
+              Doctors | Request Appointment
             </h1>
           </Row>
         </Container>
@@ -66,9 +65,7 @@ const CreateAppointment = () => {
       <Container className="">
         <Container className="m-3">
           {!selectedDoctor ? (
-            <>
-              
-            </>
+            <></>
           ) : (
             <div
               style={{
@@ -92,8 +89,8 @@ const CreateAppointment = () => {
         ) : (
           <Row>
             {doctors.map((doctor, index) => (
-              <DocCard 
-              setWarning={setWarning}
+              <DocCard
+                setWarning={setWarning}
                 doctor={doctor}
                 index={index}
                 setSelectedDoctor={setSelectedDoctor}

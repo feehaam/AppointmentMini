@@ -28,7 +28,7 @@ public class PatientController {
     }
 
     @GetMapping("/{userId}/patient")
-    public ResponseEntity<Patient> read(@PathVariable String userId) throws ItemNotFoundException {
+    public ResponseEntity<Patient> read(@PathVariable("userId") String userId) throws ItemNotFoundException {
         return ResponseEntity.ok(patientService.read(userId));
     }
 

@@ -32,6 +32,7 @@ import Notifications from "components/notification/Notifications";
 import SettingsPage from "components/notification/SettingsPage";
 import Search from "components/search/Search";
 import AdminDashboard from "components/admin-dashboard/Dashboard";
+import Appointments from "components/appointments/Appointments";
 
 var routes = [
   {
@@ -59,6 +60,14 @@ var routes = [
     role: "PATIENT",
   },
   {
+    path: "/appointments",
+    name: "Appointments",
+    icon: "fa fa-clock text-red",
+    component: <Appointments />,
+    layout: "/health",
+    role: "ADMIN PATIENT DOCTOR",
+  },
+  {
     path: "/admin",
     name: "Home",
     icon: "fa fa-home text-info",
@@ -67,9 +76,9 @@ var routes = [
     role: "ADMIN",
   },
   {
-    path: "/appointment",
-    name: "Appointment",
-    icon: "fa-solid fa-clock text-primary",
+    path: "/take-appointment",
+    name: "Doctors",
+    icon: "fa-solid fa-person text-primary",
     component: <CreateAppointment />,
     layout: "/health",
     role: "ADMIN PATIENT",
@@ -142,7 +151,7 @@ var routes = [
   {
     path: "/doctors/:doctorId",
     name: "Profile",
-    icon: "ni ni-single-02 text-gray",
+    icon: "ni ni-single-02 text-green",
     component: <DoctorProfile />,
     layout: "/health",
     role: "DOCTOR",
@@ -150,7 +159,7 @@ var routes = [
   {
     path: "/doctors/edit-profile",
     name: "Edic Profile",
-    icon: "fas fa-user-edit text-info",
+    icon: "fas fa-user-edit text-orange",
     component: <EditDoctorProfile />,
     layout: "/health",
     role: "DOCTOR",
@@ -158,7 +167,7 @@ var routes = [
   {
     path: "/patients/edit-profile",
     name: "Edic Profile",
-    icon: "fas fa-user-edit text-pink",
+    icon: "fas fa-user-edit text-green",
     component: <EditPatientProfile />,
     layout: "/health",
     role: "PATIENT",

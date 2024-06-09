@@ -1,8 +1,4 @@
-import {
-  Button,
-  Col,
-  Row,
-} from "reactstrap";
+import { Button, Col, Row } from "reactstrap";
 import Purpose from "./Purpose";
 import Patients from "./Patients";
 import { Link, useNavigate } from "react-router-dom";
@@ -23,9 +19,6 @@ const Index = (props) => {
 
   return (
     <>
-
-      
-
       <Patients />
 
       <Row className="align-items-center">
@@ -45,8 +38,8 @@ const Index = (props) => {
                 <p
                   style={{ color: "white", textShadow: "2px 2px 4px #888888" }}
                 >
-                  Explore our advanced in-person and telemedicine services that bring
-                  healthcare to your fingertips. Connect with our skilled
+                  Explore our advanced in-person and telemedicine services that
+                  bring healthcare to your fingertips. Connect with our skilled
                   medical professionals from the comfort of your home, ensuring
                   timely and accessible medical consultations. Embrace the
                   future of healthcare with our secure and user-friendly
@@ -58,9 +51,9 @@ const Index = (props) => {
           <Row>
             <Col>
               <Col>
-                <Link to={"/health/appointment"}>
+                <Link to={"/health/take-appointment"}>
                   <Button className="m-2">
-                    Book an appointment
+                    Browse doctor profiles & take appointment
                   </Button>
                 </Link>
               </Col>
@@ -94,11 +87,10 @@ const Index = (props) => {
                 <p
                   style={{ color: "white", textShadow: "2px 2px 4px #888888" }}
                 >
-                  Our healthcare community is a space where people from all over 
-                  the places takes benefits from smart treatment and health 
-                  advising, fostering a
-                  sense of connection and empowerment on the journey to optimal
-                  health.
+                  Our healthcare community is a space where people from all over
+                  the places takes benefits from smart treatment and health
+                  advising, fostering a sense of connection and empowerment on
+                  the journey to optimal health.
                 </p>
               </div>
             </Col>
@@ -107,7 +99,9 @@ const Index = (props) => {
             <Col>
               <Col>
                 <Link to={"/public/register-patient"}>
-                  <Button className="m-2">Create an account</Button>
+                  <Button className="m-2">
+                    Create an account as a patient
+                  </Button>
                 </Link>
               </Col>
             </Col>
@@ -131,7 +125,9 @@ const Index = (props) => {
                 <p
                   style={{ color: "white", textShadow: "2px 2px 4px #888888" }}
                 >
-                  Are you a doctor? Willing to join our skilled community of the physicians? Join and start treating people in person and through telemedicine media!
+                  Are you a doctor? Willing to join our skilled community of the
+                  physicians? Join and start treating people in person and
+                  through telemedicine media!
                 </p>
               </div>
             </Col>
@@ -140,7 +136,9 @@ const Index = (props) => {
             <Col>
               <Col>
                 <Link to={"/public/register-doctor"}>
-                  <Button className="m-2">Join as a doctor</Button>
+                  <Button className="m-2">
+                    Join as a doctor to treat others
+                  </Button>
                 </Link>
               </Col>
             </Col>
