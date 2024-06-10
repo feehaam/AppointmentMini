@@ -33,6 +33,7 @@ import SettingsPage from "components/notification/SettingsPage";
 import Search from "components/search/Search";
 import AdminDashboard from "components/admin-dashboard/Dashboard";
 import Appointments from "components/appointments/Appointments";
+import AppointmentRoom from "components/appointments/AppointmentRoom";
 
 var routes = [
   {
@@ -47,17 +48,17 @@ var routes = [
     path: "/doctor",
     name: "Home",
     icon: "fa fa-home text-info",
-    component: <DoctorDashboard />,
+    component: <Appointments />,
     layout: "/health",
-    role: "DOCTOR",
+    role: "",
   },
   {
     path: "/patient",
     name: "Home",
     icon: "fa fa-home text-info",
-    component: <PatientDashboard />,
+    component: <Appointments />,
     layout: "/health",
-    role: "PATIENT",
+    role: "",
   },
   {
     path: "/appointments",
@@ -66,6 +67,14 @@ var routes = [
     component: <Appointments />,
     layout: "/health",
     role: "ADMIN PATIENT DOCTOR",
+  },
+  {
+    path: "/appointment-room/:appointmentId",
+    name: "Appointment Room",
+    icon: "ni ni-single-02 text-pink",
+    component: <AppointmentRoom />,
+    layout: "/health",
+    role: "",
   },
   {
     path: "/admin",

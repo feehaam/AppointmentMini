@@ -14,6 +14,7 @@ import {
   Container,
 } from "reactstrap";
 import { Link, useNavigate } from "react-router-dom";
+import dayjs from "dayjs";
 
 const List = () => {
   const [apps, setApps] = useState([]);
@@ -49,35 +50,28 @@ const List = () => {
     }));
   };
 
-  function formatDateTime(dateString) {
-    const parts = dateString.split(" ");
-    const [year, month, day] = parts[0].split("-");
-    const [hour, minute] = parts[1].split(":");
-    return `${year}-${month.padStart(2, "0")}-${day.padStart(
-      2,
-      "0"
-    )} ${hour.padStart(2, "0")}:${minute.padStart(2, "0")}`;
-  }
-
   const handleApproveAppointment = async (appointmentId) => {
     const dateTime = selectedDateTime[appointmentId];
     if (!dateTime) {
       alert("Please select a date and time");
       return;
     }
-
-    const formattedDateTime = formatDateTime(dateTime);
-
+    const formattedDateTime = dayjs(dateTime).format("YYYY-MM-DD HH:mm");
     try {
       const response = await AxiosInstance.put(
         `http://localhost:8080/appointments/approve/${appointmentId}`,
-        { dateTime: formattedDateTime } // Send as string
+        formattedDateTime,
+        {
+          headers: {
+            "Content-Type": "text/plain",
+          },
+        }
       );
       console.log(response.data);
-      // Handle successful update (e.g., refresh appointments)
+      window.location.href = "/health/appointments";
     } catch (error) {
       console.error(error);
-      // Handle error
+      window.location.href = "/health/appointments";
     }
   };
 
@@ -158,27 +152,38 @@ const List = () => {
                   </Row>
                   <Row>
                     <Col>
-                      <b>Status -</b>{" "}
-                      {app.status == 0 ? <>PENDING</> : <>SCHEDULED</>}
+                      {app.status == 0 ? (
+                        <div>
+                          {" "}
+                          <b>Status -</b>{" "}
+                          <span className="text-warning">PENDING</span>
+                        </div>
+                      ) : (
+                        <div>
+                          {" "}
+                          <b>Status -</b>{" "}
+                          <span className="text-success">SCHEDULED</span>
+                        </div>
+                      )}{" "}
                     </Col>
                   </Row>
                   <p className="mt-3 mb-0 text-muted text-sm">
                     <Row>
                       <Col style={{ whiteSpace: "nowrap" }}>
-                        <span className="text-success mr-2 mb-2">
+                        <span className="text-dark mr-2 mb-2">
                           <i className="fa fa-user" />{" "}
                           <Link
                             to={`/health/patients/${extractDoctorId(
                               app.patientId
                             )}`}
-                            className="text-success"
+                            className="text-info"
                           >
                             Patient profile
                           </Link>
                         </span>
                       </Col>
                       <Col style={{ whiteSpace: "nowrap" }}>
-                        <span className="text-info mr-2 mb-2">
+                        <span className="text-dark mr-2 mb-2">
                           <i className="fa fa-user" />{" "}
                           <Link
                             to={`/health/doctors/${extractDoctorId(
@@ -201,7 +206,7 @@ const List = () => {
                         </span>
                       </Col>
                     </Row>
-                    {userId.startsWith("D") && (
+                    {userId.startsWith("D") && app.status == 0 && (
                       <>
                         <Row>
                           <Col>
@@ -223,16 +228,34 @@ const List = () => {
                         </Row>
                       </>
                     )}
-                    <div style={{ textAlign: "center" }}>
-                      <Button
-                        disabled={!selectedDateTime[app.appointmentId]}
-                        onClick={() =>
-                          handleApproveAppointment(app.appointmentId)
-                        }
-                      >
-                        Approve
-                      </Button>
-                    </div>
+                    {userId.startsWith("D") && app.status == 0 && (
+                      <div style={{ textAlign: "center" }}>
+                        <Button
+                          className={
+                            selectedDateTime[app.appointmentId]
+                              ? "btn btn-success mt-2"
+                              : "btn btn-light mt-2"
+                          }
+                          disabled={!selectedDateTime[app.appointmentId]}
+                          onClick={() =>
+                            handleApproveAppointment(app.appointmentId)
+                          }
+                        >
+                          Approve
+                        </Button>
+                      </div>
+                    )}
+
+                    {app.status == 1 && (
+                      <div style={{ textAlign: "center" }}>
+                        <Link
+                          to={`/health/appointment-room/${app.appointmentId}`}
+                          className="btn btn-outline-dark"
+                        >
+                          Appointment room
+                        </Link>
+                      </div>
+                    )}
                   </p>
                 </CardBody>
               </Card>

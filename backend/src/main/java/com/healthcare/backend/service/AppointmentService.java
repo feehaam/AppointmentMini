@@ -1,10 +1,13 @@
 package com.healthcare.backend.service;
 
 import com.healthcare.backend.entity.Appointment;
+import com.healthcare.backend.entity.Chat;
+import com.healthcare.backend.exception.AccessMismatchException;
 import com.healthcare.backend.exception.ItemNotFoundException;
 import com.healthcare.backend.repository.AppointmentRepository;
 import com.healthcare.backend.utilities.token.IDExtractor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -34,11 +37,12 @@ public class AppointmentService {
                 .orElseThrow(() -> new ItemNotFoundException("appointment", appointmentId));
         appointment.setStatus(1);
         appointment.setDateTime(localDateTime);
+        repository.save(appointment);
     }
     private String getId(String doctorId) {
-        String prefix = doctorId + IDExtractor.getUserID();
+        String prefix = doctorId + "-" + IDExtractor.getUserID();
         long count = repository.countByAppointmentIdStartingWith(prefix) + 1;
-        return prefix + String.valueOf(count);
+        return prefix + "-" + String.valueOf(count);
     }
 
     public List<Appointment> getAll() {
@@ -49,5 +53,34 @@ public class AppointmentService {
         else return repository.findAll().stream()
                 .filter(appointment -> appointment.getPatientId().equals(userId))
                 .collect(Collectors.toList());
+    }
+
+    public void sendToChat(String appointmentId, int type, String text) {
+        Appointment appointment = repository.findById(appointmentId)
+                .orElseThrow(() -> new ItemNotFoundException("appointment", appointmentId));
+        var chats = appointment.getChats();
+        if(chats == null) {
+            appointment.setChats(new ArrayList<>());
+            chats = appointment.getChats();
+        }
+        String userId = IDExtractor.getUserID();
+        if(!appointmentId.contains(userId)) {
+            throw new AccessMismatchException("No permission to send message to this chat", HttpStatus.BAD_REQUEST);
+        }
+        Chat chat = Chat.builder()
+                .text(text)
+                .time(LocalDateTime.now())
+                .userId(IDExtractor.getUserID())
+                .text(type == 1 ? text : null)
+                .fileUrl(type == 1 ? null : text)
+                .build();
+
+        chats.add(chat);
+        repository.save(appointment);
+    }
+
+    public Appointment getById(String appointmentId) {
+        return repository.findById(appointmentId)
+                .orElseThrow(() -> new ItemNotFoundException("appointment", appointmentId));
     }
 }

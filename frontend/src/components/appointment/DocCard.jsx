@@ -28,18 +28,18 @@ const DocCard = ({ doctor, index, setSelectedDoctor, setWarning }) => {
   }, []);
 
   const requestAppointment = (type, docId) => {
-    const url = `http://localhost:8080/appointments/request/${docId}/${type}`
+    const url = `http://localhost:8080/appointments/request/${docId}/${type}`;
     console.log(url);
     AxiosInstance.post(url)
       .then((response) => {
-        window.location.href = '/health/patient';
+        window.location.href = "/health/patient";
         console.log(requestAppointment);
       })
       .catch((error) => {
-        setWarning("Failed to request an appointment! " + error.message)
+        setWarning("Failed to request an appointment! " + error.message);
         console.log(error);
       });
-  }
+  };
 
   return (
     <>
@@ -78,8 +78,18 @@ const DocCard = ({ doctor, index, setSelectedDoctor, setWarning }) => {
             <div className="m-2">
               <p className="">Specialized at {doctor.specializations}. </p>
               <p className="mb--1">{`Experience: ${doctor.experience} years`}</p>
-              <Button onClick={() => requestAppointment(1, doctor.userId)} className="mt-4 bg-green text-white">Request online appointment</Button>
-              <Button onClick={() => requestAppointment(2, doctor.userId)} className="mt-4 bg-blue text-white">Request in-person appointment</Button>
+              <Button
+                onClick={() => requestAppointment(1, doctor.userId)}
+                className="mt-4 bg-green text-white"
+              >
+                Request online appointment
+              </Button>
+              <Button
+                onClick={() => requestAppointment(2, doctor.userId)}
+                className="mt-4 bg-blue text-white"
+              >
+                Request in-person appointment
+              </Button>
             </div>
           </CardBody>
         </Card>

@@ -7,9 +7,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/v2")
+@RequestMapping("/files")
 @RequiredArgsConstructor
 public class LocalFileServiceController {
 
@@ -22,11 +28,14 @@ public class LocalFileServiceController {
     }
 
     @GetMapping("/download")
-    public ResponseEntity<Object> download(@RequestParam String filePath) throws LocalFileHandlingException {
-        Object object = fileService.download(filePath);
-        return ResponseEntity.ok(object);
+    public ResponseEntity<byte[]> download(@RequestParam("filePath") String filePath) throws IOException {
+        File file = new File(filePath);
+        Path path = Paths.get(filePath);
+        byte[] fileContent = Files.readAllBytes(path);
+        return ResponseEntity.ok()
+                .header("Content-Disposition", "attachment; filename=" + file.getName())
+                .body(fileContent);
     }
-
     @DeleteMapping("/delete")
     public ResponseEntity<String> delete(@RequestParam String url) throws LocalFileHandlingException {
         fileService.delete(url);
