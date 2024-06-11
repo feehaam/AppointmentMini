@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Form, Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import {
@@ -22,7 +22,7 @@ const AppointmentRoom = () => {
   const [selectedFile, setSelectedFile] = useState(undefined);
 
   const [appointment, setAppointment] = useState({
-    appointmentId: "DMA1PSF11",
+    appointmentId: "xxxxx",
     doctorId: "DMA1",
     patientId: "PSF1",
     status: 1,
@@ -113,12 +113,14 @@ const AppointmentRoom = () => {
   };
 
   useEffect(() => {
-    updatAppointment();
-  }, [appointmentId]);
+    scrollToBottom();
+  }, []);
 
-  useEffect(() => {
-    window.scrollTo(0, 1000000);
-  }, [appointment]);
+  const scrollToBottom = () => {
+    window.scrollTo({
+      top: 10000,
+    });
+  };
 
   const download = (filePath) => {
     fetch(`http://localhost:8080/files/download?filePath=${filePath}`)
@@ -269,7 +271,8 @@ const AppointmentRoom = () => {
                   {appointment.type == 1 ? (
                     <h2 className="text-white">
                       <b className="text-dark">
-                        Please use this link to connect in the appointment:{" "}
+                        Ask the doctor for his/her zoom/meet link in chat for
+                        the appointment.
                       </b>
                       <b>
                         <a
@@ -283,7 +286,7 @@ const AppointmentRoom = () => {
                   ) : (
                     <h2 className="text-dark">
                       The doctor will provide his/her allocated room in chat for
-                      the appointment
+                      the appointment.
                     </h2>
                   )}
                 </Col>
