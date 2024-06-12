@@ -4,22 +4,26 @@ import com.healthcare.backend.entity.Appointment;
 import com.healthcare.backend.entity.Chat;
 import com.healthcare.backend.exception.AccessMismatchException;
 import com.healthcare.backend.exception.ItemNotFoundException;
-import com.healthcare.backend.repository.AppointmentRepository;
 import com.healthcare.backend.utilities.token.IDExtractor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import com.healthcare.backend.repository.AppointmentRepository;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
+
+import static com.healthcare.backend.utilities.constants.AppConstants.MEET_LINKS;
 
 @Service @RequiredArgsConstructor
 public class AppointmentService {
     private final AppointmentRepository repository;
 
     public void createAppointment(String doctorId, int type){
+        Random random = new Random();
         Appointment appointment = Appointment.builder()
                 .appointmentId(getId(doctorId))
                 .type(type)
@@ -28,6 +32,7 @@ public class AppointmentService {
                 .doctorId(doctorId)
                 .patientId(IDExtractor.getUserID())
                 .chats(new ArrayList<>())
+                .url(MEET_LINKS.get(random.nextInt(MEET_LINKS.size())))
                 .build();
         repository.save(appointment);
     }

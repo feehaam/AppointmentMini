@@ -20,5 +20,6 @@ public class Appointment {
     private List<Chat> chats;
     private String doctorId;
     private String patientId;
+    private String url;
     private int status;
 }

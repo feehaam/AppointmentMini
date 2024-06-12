@@ -1,5 +1,7 @@
 package com.healthcare.backend.utilities.constants;
 
+import java.util.List;
+
 public class AppConstants {
     public static final String TOKEN_SECRET = "PAKHI_PAKA_PEPE_KHAY";
     // Setting for 30 days.
@@ -16,4 +18,9 @@ public class AppConstants {
     // APIs
     public static final String SIGN_IN = "/access/login";
     public static final String SIGN_UP = "/account/create-account";
+    public static final List<String> MEET_LINKS = List.of(
+            "https://meet.google.com/vtf-rfix-juh",
+            "https://meet.google.com/rxc-kj6f-jux",
+            "https://meet.google.com/ffdc-je6f-fdx",
+            "https://meet.google.com/sd4s-dfdf-44x");
 }

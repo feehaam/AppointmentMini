@@ -21,82 +21,7 @@ const AppointmentRoom = () => {
   const [message, setMessage] = useState("");
   const [selectedFile, setSelectedFile] = useState(undefined);
 
-  const [appointment, setAppointment] = useState({
-    appointmentId: "xxxxx",
-    doctorId: "DMA1",
-    patientId: "PSF1",
-    status: 1,
-    dateTime: "12 June 2024, 06:45pm",
-    type: 1,
-    description: "https://zoom.us/id_433434",
-    chats: [
-      {
-        id: 11,
-        userId: "PSF1",
-        text: "hello",
-        time: "08 June 2024, 06:00pm",
-        seen: true,
-        fileUrl: null,
-      },
-      {
-        id: 12,
-        userId: "DMA1",
-        text: "Please do the X-ray and send me report",
-        time: "08 June 2024, 06:05pm",
-        seen: true,
-        fileUrl: null,
-      },
-      {
-        id: 16,
-        userId: "PSF1",
-        text: "Okay sure, tomorrow I'll do it",
-        time: "08 June 2024, 06:30pm",
-        seen: true,
-        fileUrl: null,
-      },
-      {
-        id: 18,
-        userId: "PSF1",
-        text: null,
-        time: "09 June 2024, 11:26am",
-        seen: true,
-        fileUrl:
-          "F:/HC/backend/src/storage/93507bef-0cd2-4495-a929-e756f3a48cfbmeeee.jpg",
-      },
-      {
-        id: 19,
-        userId: "DMA1",
-        text: "Looks great! See you in the appointment time",
-        time: "09 June 2024, 03:02pm",
-        seen: false,
-        fileUrl: null,
-      },
-      {
-        id: 44,
-        userId: "DMA1",
-        text: "Here is the prescribtion",
-        time: "13 June 2024, 10:12am",
-        seen: false,
-        fileUrl: null,
-      },
-      {
-        id: 45,
-        userId: "DMA1",
-        text: null,
-        time: "13 June 2024, 10:12am",
-        seen: false,
-        fileUrl: "F:HC\frontendsrcassetsimgcoverhealth5.jpg",
-      },
-      {
-        id: 46,
-        userId: "PSF1",
-        text: "Thank you <3",
-        time: "13 June 2024, 10:14am",
-        seen: false,
-        fileUrl: null,
-      },
-    ],
-  });
+  const [appointment, setAppointment] = useState(null);
 
   const userId = localStorage.getItem("userId")
     ? localStorage.getItem("userId")
@@ -211,7 +136,7 @@ const AppointmentRoom = () => {
   };
 
   return (
-    <>
+    <>{appointment && <>
       <div
         className="header pb-7 pt-5 pt-lg-8 d-flex align-items-center"
         style={{
@@ -271,8 +196,7 @@ const AppointmentRoom = () => {
                   {appointment.type == 1 ? (
                     <h2 className="text-white">
                       <b className="text-dark">
-                        Ask the doctor for his/her zoom/meet link in chat for
-                        the appointment.
+                       Join the following link in time of appointment to connect with the doctor - {appointment.url && <a className="text-white" href={appointment.url}>{appointment.url}</a>}
                       </b>
                       <b>
                         <a
@@ -376,7 +300,7 @@ const AppointmentRoom = () => {
           </Card>
         )}
       </Container>
-    </>
+    </>}</>
   );
 };
 

@@ -40,7 +40,7 @@ export const DoctorProfileDetails = ({ doctorData }) => {
           <div className="pl-lg-4">
             <Row>
               <Col lg="6">
-                <b>Doctor ID: {doctorData.doctorId}</b>
+                <b>Doctor ID: {doctorData.userId}</b>
               </Col>
             </Row>
             <Row>
