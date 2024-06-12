@@ -50,6 +50,8 @@ public class SecurityConfig {
                             .requestMatchers(HttpMethod.POST, "/access/**").permitAll()
                             .requestMatchers(HttpMethod.POST, "/doctors/register").permitAll()
                             .requestMatchers(HttpMethod.POST, "/patients/register").permitAll()
+                            .requestMatchers(HttpMethod.POST, "/files/**").permitAll()
+                            .requestMatchers(HttpMethod.GET, "/files/**").permitAll()
                             .anyRequest().authenticated();
                 })
                 .addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
